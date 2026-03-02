@@ -1,13 +1,52 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibrant Product Landing Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .product-image-container {
+            min-height: 400px;
+            background-color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 pb-24">
 
+    <div class="bg-blue-50 text-blue-600 text-center py-2 text-sm font-medium">
+        🚛 Shipping take 1-3 days
+    </div>
+
+    <div class="max-w-4xl mx-auto mt-4 px-4">
+        <div class="product-image-container rounded-2xl overflow-hidden shadow-inner border-2 border-dashed border-gray-300">
+            <img id="product-img" src="https://via.placeholder.com/800x600?text=PRODUCT+IMAGES" alt="产品图片" class="w-full h-full object-cover">
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-6 mt-6 text-center">
+        <h1 id="product-name" class="text-2xl font-bold text-gray-800">这里是你的产品名称</h1>
+        <p id="product-desc" class="text-gray-500 mt-2 text-sm">这里可以写一段吸引人的产品介绍，支持多行显示。</p>
+    </div>
+
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-2xl z-50">
+        <div class="max-w-4xl mx-auto flex items-center gap-4">
+            <a href="https://wa.me/60123456789?text=我想询问产品" 
+               id="wa-link"
+               target="_blank"
+               class="flex-1 bg-[#25D366] hover:bg-[#20ba5a] text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold transition-all">
+               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.483 8.413-.003 6.557-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.308 1.654zm6.222-3.528l.366.218c1.399.832 3.013 1.271 4.671 1.271h.004c5.479 0 9.936-4.458 9.939-9.938 0-2.657-1.035-5.151-2.914-7.03-1.878-1.879-4.375-2.913-7.031-2.913-5.482 0-9.941 4.458-9.944 9.94-.001 1.748.456 3.454 1.32 4.953l.238.412-1.103 4.025 4.125-1.082z"/></svg>
+               Whatsapp
+            </a>
+            <div class="bg-gray-100 px-6 py-3 rounded-xl">
+                <span class="text-xs text-gray-500 block leading-none">Price</span>
+                <span id="product-price" class="text-lg font-black text-blue-700">RM168</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
