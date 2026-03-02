@@ -191,45 +191,40 @@
   const supabase = supabase.createClient(supabaseUrl, supabaseKey)
 
   async function loadProductData() {
-    // 假设我们只取第一行产品数据
+    console.log("正在尝试从 Supabase 读取数据...");
+    
+    // 🚩 注意这里：必须是表名 'Products'，不能是 'product A'
     const { data, error } = await supabase
-      .from('product A')
+      .from('Products') 
       .select('*')
       .limit(1)
       .single()
 
     if (error) {
-      console.error('Error loading data:', error)
-      return
+      console.error('读取失败，原因如下：', error);
+      return;
     }
 
     if (data) {
-      // 1. 更新文字内容
-      document.querySelector('h2 + p').innerText = data.description;
-      document.querySelector('.text-lg.font-black').innerText = data.price;
+      console.log('成功拿到数据：', data);
       
-      // 2. 更新 WhatsApp 链接
-      const waLink = `https://wa.me/${data.wa_number}?text=我想询问：${encodeURIComponent(data.name)}`;
-      document.querySelector('a[href^="https://wa.me"]').href = waLink;
+      // 1. 更新描述 (对应你刚加的 id="prod-desc")
+      const descElement = document.getElementById('prod-desc');
+      if (descElement) {
+        descElement.innerText = data.description;
+      } else {
+        // 如果没加 ID，就用原来的选择器
+        document.querySelector('h2 + p').innerText = data.description;
+      }
 
-      // 3. 更新图片 (主图和缩略图)
-      const images = [data.image_1, data.image_2, data.image_3, data.image_4];
-      
-      // 更新大图
-      images.forEach((imgUrl, index) => {
-        const imgElement = document.querySelector(`.img-${index + 1}`);
-        if (imgElement && imgUrl) imgElement.src = imgUrl;
-      });
-
-      // 更新缩略图
-      const thumbLabels = document.querySelectorAll('.gallery-thumbs img');
-      images.forEach((imgUrl, index) => {
-        if (thumbLabels[index] && imgUrl) thumbLabels[index].src = imgUrl;
-      });
+      // 2. 更新价格
+      const priceElement = document.querySelector('.text-lg.font-black');
+      if (priceElement) {
+        priceElement.innerText = `RM${data.price}`;
+      }
     }
   }
 
-  // 页面加载时运行
   loadProductData();
 </script>
 
