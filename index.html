@@ -1,50 +1,95 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vibrant Product Landing Page</title>
+    <title>产品落地页</title>
+    <!-- 引入 Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .product-image-container {
-            min-height: 400px;
-            background-color: #e5e7eb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        /* 纯 CSS 图片切换逻辑 (Radio Button Hack) */
+        #img-1:checked ~ .gallery-main .img-1 { display: block; }
+        #img-2:checked ~ .gallery-main .img-2 { display: block; }
+        #img-3:checked ~ .gallery-main .img-3 { display: block; }
+        #img-4:checked ~ .gallery-main .img-4 { display: block; }
+        
+        /* 缩略图选中高亮 */
+        #img-1:checked ~ .gallery-thumbs label[for="img-1"] { border-color: #2563eb; transform: scale(1.05); opacity: 1; }
+        #img-2:checked ~ .gallery-thumbs label[for="img-2"] { border-color: #2563eb; transform: scale(1.05); opacity: 1; }
+        #img-3:checked ~ .gallery-thumbs label[for="img-3"] { border-color: #2563eb; transform: scale(1.05); opacity: 1; }
+        #img-4:checked ~ .gallery-thumbs label[for="img-4"] { border-color: #2563eb; transform: scale(1.05); opacity: 1; }
+
+        /* 隐藏滚动条 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-gray-50 pb-24">
+<body class="bg-[#BFDBFE] font-sans text-slate-900 pb-24">
 
-    <div class="bg-blue-50 text-blue-600 text-center py-2 text-sm font-medium">
-        🚛 Shipping take 1-3 days
+    <!-- Top Banner -->
+    <div class="bg-white/80 backdrop-blur-sm py-3 px-4 text-center border-b border-blue-200">
+        <p class="text-sm font-medium flex items-center justify-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-2.235-2.767A1 1 0 0 0 18.77 9H15v9"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+            Shipping take 1-3 days
+        </p>
     </div>
 
-    <div class="max-w-4xl mx-auto mt-4 px-4">
-        <div class="product-image-container rounded-2xl overflow-hidden shadow-inner border-2 border-dashed border-gray-300">
-            <img id="product-img" src="https://via.placeholder.com/800x600?text=PRODUCT+IMAGES" alt="产品图片" class="w-full h-full object-cover">
-        </div>
-    </div>
+    <!-- Hero Section / Product Images -->
+    <section class="p-4 space-y-4 relative max-w-md mx-auto">
+        <!-- 控制器 (隐藏的单选框) -->
+        <input type="radio" name="gallery" id="img-1" class="hidden" checked>
+        <input type="radio" name="gallery" id="img-2" class="hidden">
+        <input type="radio" name="gallery" id="img-3" class="hidden">
+        <input type="radio" name="gallery" id="img-4" class="hidden">
 
-    <div class="max-w-4xl mx-auto px-6 mt-6 text-center">
-        <h1 id="product-name" class="text-2xl font-bold text-gray-800">这里是你的产品名称</h1>
-        <p id="product-desc" class="text-gray-500 mt-2 text-sm">这里可以写一段吸引人的产品介绍，支持多行显示。</p>
-    </div>
-
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-2xl z-50">
-        <div class="max-w-4xl mx-auto flex items-center gap-4">
-            <a href="https://wa.me/60123456789?text=我想询问产品" 
-               id="wa-link"
-               target="_blank"
-               class="flex-1 bg-[#25D366] hover:bg-[#20ba5a] text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold transition-all">
-               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.483 8.413-.003 6.557-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.308 1.654zm6.222-3.528l.366.218c1.399.832 3.013 1.271 4.671 1.271h.004c5.479 0 9.936-4.458 9.939-9.938 0-2.657-1.035-5.151-2.914-7.03-1.878-1.879-4.375-2.913-7.031-2.913-5.482 0-9.941 4.458-9.944 9.94-.001 1.748.456 3.454 1.32 4.953l.238.412-1.103 4.025 4.125-1.082z"/></svg>
-               Whatsapp
-            </a>
-            <div class="bg-gray-100 px-6 py-3 rounded-xl">
-                <span class="text-xs text-gray-500 block leading-none">Price</span>
-                <span id="product-price" class="text-lg font-black text-blue-700">RM168</span>
+        <!-- 大图显示区 -->
+        <div class="gallery-main aspect-square bg-blue-100 rounded-2xl overflow-hidden border-2 border-blue-300 relative shadow-lg">
+            <img src="https://picsum.photos/seed/product-main/800/800" class="img-1 absolute inset-0 w-full h-full object-cover hidden" alt="Product 1">
+            <img src="https://picsum.photos/seed/prd-img-1/800/800" class="img-2 absolute inset-0 w-full h-full object-cover hidden" alt="Product 2">
+            <img src="https://picsum.photos/seed/prd-img-2/800/800" class="img-3 absolute inset-0 w-full h-full object-cover hidden" alt="Product 3">
+            <img src="https://picsum.photos/seed/prd-img-3/800/800" class="img-4 absolute inset-0 w-full h-full object-cover hidden" alt="Product 4">
+            
+            <div class="absolute inset-0 flex items-center justify-center bg-black/5 pointer-events-none">
+                <span class="text-blue-800/30 font-bold text-4xl uppercase tracking-widest">Product Images</span>
             </div>
+        </div>
+
+        <!-- 缩略图控制器 -->
+        <div class="gallery-thumbs grid grid-cols-4 gap-3">
+            <label for="img-1" class="aspect-square rounded-xl border-2 border-blue-200 opacity-70 overflow-hidden cursor-pointer transition-all">
+                <img src="https://picsum.photos/seed/product-main/200/200" class="w-full h-full object-cover">
+            </label>
+            <label for="img-2" class="aspect-square rounded-xl border-2 border-blue-200 opacity-70 overflow-hidden cursor-pointer transition-all">
+                <img src="https://picsum.photos/seed/prd-img-1/200/200" class="w-full h-full object-cover">
+            </label>
+            <label for="img-3" class="aspect-square rounded-xl border-2 border-blue-200 opacity-70 overflow-hidden cursor-pointer transition-all">
+                <img src="https://picsum.photos/seed/prd-img-2/200/200" class="w-full h-full object-cover">
+            </label>
+            <label for="img-4" class="aspect-square rounded-xl border-2 border-blue-200 opacity-70 overflow-hidden cursor-pointer transition-all">
+                <img src="https://picsum.photos/seed/prd-img-3/200/200" class="w-full h-full object-cover">
+            </label>
+        </div>
+    </section>
+
+    <!-- Product Description -->
+    <section class="p-6 bg-white/40 border-y border-blue-200 max-w-md mx-auto">
+        <h2 class="text-xl font-bold mb-3 flex items-center gap-2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            Product Description
+        </h2>
+        <p class="text-slate-700 leading-relaxed">
+            这里是产品描述文字，你可以随意修改。这段代码是纯 HTML 和 CSS 编写的，不需要任何复杂的开发环境。
+        </p>
+    </section>
+
+    <!-- Fixed Bottom Bar -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-blue-100 p-4 flex items-center gap-4 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50 max-w-md mx-auto">
+        <a href="https://wa.me/yournumber" class="flex-1 bg-[#4ADE80] hover:bg-[#22C55E] text-slate-900 font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors active:scale-95">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></svg>
+            Whatsapp
+        </a>
+        <div class="bg-blue-100 px-6 py-4 rounded-xl border border-blue-200">
+            <span class="text-xl font-black text-blue-900">RM168</span>
         </div>
     </div>
 
