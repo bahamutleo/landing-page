@@ -183,22 +183,25 @@
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-  const supabaseUrl = 'https://sereexsifpgpgbhmcdqv.supabase.co'
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlcmVleHNpZnBncGdiaG1jZHF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0MzgwNjcsImV4cCI6MjA4ODAxNDA2N30.6DOdcwdqyu24LaXL96iP9bLfaFnz-B2bsCbFN1aYFqs'
-  const supabase = supabase.createClient(supabaseUrl, supabaseKey)
+  // 1. 初始化连接 (修正了变量名冲突)
+  const supabaseUrl = 'https://sereexsifpgpgbhmcdqv.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlcmVleHNpZnBncGdiaG1jZHF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0MzgwNjcsImV4cCI6MjA4ODAxNDA2N30.6DOdcwdqyu24LaXL96iP9bLfaFnz-B2bsCbFN1aYFqs';
+  
+  // 使用 supabase.createClient 而不是 supabase.supabase.createClient
+  const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
   async function loadProductData() {
     console.log("正在尝试从 Supabase 读取数据...");
     
-    // 🚩 注意这里：必须是表名 'Products'，不能是 'product A'
-    const { data, error } = await supabase
+    // 🚩 注意：确保你 Supabase 里的表名确实是大写的 'Products'
+    const { data, error } = await _supabase
       .from('Products') 
       .select('*')
       .limit(1)
-      .single()
+      .single();
 
     if (error) {
       console.error('读取失败，原因如下：', error);
@@ -208,24 +211,34 @@
     if (data) {
       console.log('成功拿到数据：', data);
       
-      // 1. 更新描述 (对应你刚加的 id="prod-desc")
+      // 1. 更新描述 (对应你的 id="prod-desc")
       const descElement = document.getElementById('prod-desc');
       if (descElement) {
         descElement.innerText = data.description;
-      } else {
-        // 如果没加 ID，就用原来的选择器
-        document.querySelector('h2 + p').innerText = data.description;
       }
 
-      // 2. 更新价格
+      // 2. 更新价格 (根据你之前的截图逻辑)
       const priceElement = document.querySelector('.text-lg.font-black');
       if (priceElement) {
-        priceElement.innerText = `RM${data.price}`;
+        priceElement.innerText = `RM ${data.price}`;
+      }
+
+      // 3. 更新图片 (假设你的表里有 image_url 这一列)
+      const imgElement = document.querySelector('img'); // 或者给你的 img 加个 id
+      if (imgElement && data.image_url) {
+        imgElement.src = data.image_url;
+      }
+      
+      // 4. 更新 WhatsApp 链接 (动态把产品名放进聊天内容)
+      const waBtn = document.querySelector('a[href^="https://wa.me"]');
+      if (waBtn) {
+        waBtn.href = `https://wa.me/60123456789?text=我想询问：${encodeURIComponent(data.name)}`;
       }
     }
   }
 
-  loadProductData();
+  // 页面加载完成后运行
+  window.onload = loadProductData;
 </script>
 
     
