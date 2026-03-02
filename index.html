@@ -3,94 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>产品落地页</title>
-    <!-- 引入 Tailwind CSS CDN -->
+    <title>Vibrant Product Landing Page - Standalone</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* 纯 CSS 图片切换逻辑 (Radio Button Hack) */
+        /* Pure CSS Image Switching Logic (Radio Button Hack) */
         #img-1:checked ~ .gallery-main .img-1 { display: block; }
         #img-2:checked ~ .gallery-main .img-2 { display: block; }
         #img-3:checked ~ .gallery-main .img-3 { display: block; }
         #img-4:checked ~ .gallery-main .img-4 { display: block; }
         
-        /* 缩略图选中高亮 */
+        /* Thumbnail Selection Highlight */
         #img-1:checked ~ .gallery-thumbs label[for="img-1"] { border-color: #2563eb; transform: scale(1.05); opacity: 1; }
         #img-2:checked ~ .gallery-thumbs label[for="img-2"] { border-color: #2563eb; transform: scale(1.05); opacity: 1; }
         #img-3:checked ~ .gallery-thumbs label[for="img-3"] { border-color: #2563eb; transform: scale(1.05); opacity: 1; }
         #img-4:checked ~ .gallery-thumbs label[for="img-4"] { border-color: #2563eb; transform: scale(1.05); opacity: 1; }
 
-        /* 隐藏滚动条 */
+        /* Hide Scrollbar Utility */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Smooth Transitions */
+        .gallery-main img { transition: opacity 0.3s ease-in-out; }
     </style>
 </head>
 <body class="bg-[#BFDBFE] font-sans text-slate-900 pb-24">
 
-    <!-- Top Banner -->
-    <div class="bg-white/80 backdrop-blur-sm py-3 px-4 text-center border-b border-blue-200">
-        <p class="text-sm font-medium flex items-center justify-center gap-2">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-2.235-2.767A1 1 0 0 0 18.77 9H15v9"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
-            Shipping take 1-3 days
-        </p>
-    </div>
+    <div class="max-w-md mx-auto bg-[#BFDBFE] min-h-screen relative">
+        
+        <!-- Top Banner -->
+        <div class="bg-white/80 backdrop-blur-sm py-3 px-4 text-center border-b border-blue-200">
+            <p class="text-sm font-medium flex items-center justify-center gap-2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-2.235-2.767A1 1 0 0 0 18.77 9H15v9"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+                Shipping take 1-3 days
+            </p>
+        </div>
 
-    <!-- Hero Section / Product Images -->
-    <section class="p-4 space-y-4 relative max-w-md mx-auto">
-        <!-- 控制器 (隐藏的单选框) -->
-        <input type="radio" name="gallery" id="img-1" class="hidden" checked>
-        <input type="radio" name="gallery" id="img-2" class="hidden">
-        <input type="radio" name="gallery" id="img-3" class="hidden">
-        <input type="radio" name="gallery" id="img-4" class="hidden">
+        <!-- Hero Section / Product Images (Pure CSS Gallery) -->
+        <section class="p-4 space-y-4 relative">
+            <!-- Hidden Radio Controllers -->
+            <input type="radio" name="gallery" id="img-1" class="hidden" checked>
+            <input type="radio" name="gallery" id="img-2" class="hidden">
+            <input type="radio" name="gallery" id="img-3" class="hidden">
+            <input type="radio" name="gallery" id="img-4" class="hidden">
 
-        <!-- 大图显示区 -->
-        <div class="gallery-main aspect-square bg-blue-100 rounded-2xl overflow-hidden border-2 border-blue-300 relative shadow-lg">
-            <img src="https://picsum.photos/seed/product-main/800/800" class="img-1 absolute inset-0 w-full h-full object-cover hidden" alt="Product 1">
-            <img src="https://picsum.photos/seed/prd-img-1/800/800" class="img-2 absolute inset-0 w-full h-full object-cover hidden" alt="Product 2">
-            <img src="https://picsum.photos/seed/prd-img-2/800/800" class="img-3 absolute inset-0 w-full h-full object-cover hidden" alt="Product 3">
-            <img src="https://picsum.photos/seed/prd-img-3/800/800" class="img-4 absolute inset-0 w-full h-full object-cover hidden" alt="Product 4">
-            
-            <div class="absolute inset-0 flex items-center justify-center bg-black/5 pointer-events-none">
-                <span class="text-blue-800/30 font-bold text-4xl uppercase tracking-widest">Product Images</span>
+            <!-- Large Image Display Area -->
+            <div class="gallery-main aspect-square bg-blue-100 rounded-2xl overflow-hidden border-2 border-blue-300 relative shadow-lg">
+                <img src="https://picsum.photos/seed/product-main/800/800" class="img-1 absolute inset-0 w-full h-full object-cover hidden" alt="Product 1">
+                <img src="https://picsum.photos/seed/prd-img-1/800/800" class="img-2 absolute inset-0 w-full h-full object-cover hidden" alt="Product 2">
+                <img src="https://picsum.photos/seed/prd-img-2/800/800" class="img-3 absolute inset-0 w-full h-full object-cover hidden" alt="Product 3">
+                <img src="https://picsum.photos/seed/prd-img-3/800/800" class="img-4 absolute inset-0 w-full h-full object-cover hidden" alt="Product 4">
+                
+                <div class="absolute inset-0 flex items-center justify-center bg-black/5 pointer-events-none">
+                    <span class="text-blue-800/30 font-bold text-4xl uppercase tracking-widest">Product Images</span>
+                </div>
+            </div>
+
+            <!-- Thumbnail Controllers -->
+            <div class="gallery-thumbs grid grid-cols-4 gap-3">
+                <label for="img-1" class="aspect-square rounded-xl border-2 border-blue-200 opacity-70 overflow-hidden cursor-pointer transition-all">
+                    <img src="https://picsum.photos/seed/product-main/200/200" class="w-full h-full object-cover" alt="Thumb 1">
+                </label>
+                <label for="img-2" class="aspect-square rounded-xl border-2 border-blue-200 opacity-70 overflow-hidden cursor-pointer transition-all">
+                    <img src="https://picsum.photos/seed/prd-img-1/200/200" class="w-full h-full object-cover" alt="Thumb 2">
+                </label>
+                <label for="img-3" class="aspect-square rounded-xl border-2 border-blue-200 opacity-70 overflow-hidden cursor-pointer transition-all">
+                    <img src="https://picsum.photos/seed/prd-img-2/200/200" class="w-full h-full object-cover" alt="Thumb 3">
+                </label>
+                <label for="img-4" class="aspect-square rounded-xl border-2 border-blue-200 opacity-70 overflow-hidden cursor-pointer transition-all">
+                    <img src="https://picsum.photos/seed/prd-img-3/200/200" class="w-full h-full object-cover" alt="Thumb 4">
+                </label>
+            </div>
+        </section>
+
+        <!-- Product Description -->
+        <section class="p-6 bg-white/40 border-y border-blue-200">
+            <h2 class="text-xl font-bold mb-3 flex items-center gap-2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                Product Description
+            </h2>
+            <p class="text-slate-700 leading-relaxed">
+                Here Are Several Types Of Blind Text (Placeholder Text) Suitable For Product Descriptions, Ranging From Classic Lorem Ipsum To Thematic Variations, Along With Tips On How To Use Them Effectively.
+            </p>
+        </section>
+
+        <!-- Features -->
+        <section class="p-6">
+            <h2 class="text-2xl font-bold text-center mb-8 uppercase tracking-tight">Features</h2>
+            <div class="space-y-6">
+                <div class="flex items-start gap-4">
+                    <div class="w-20 h-20 bg-white rounded-lg border border-blue-200 flex-shrink-0 shadow-sm overflow-hidden">
+                        <img src="https://picsum.photos/seed/feature-1/200/200" class="w-full h-full object-cover" alt="Feature 1">
+                    </div>
+                    <p class="text-sm text-slate-700 pt-1">Here Are Several Types Of Blind Text (Placeholder Text) Suitable For Product Descriptions</p>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-20 h-20 bg-white rounded-lg border border-blue-200 flex-shrink-0 shadow-sm overflow-hidden">
+                        <img src="https://picsum.photos/seed/feature-2/200/200" class="w-full h-full object-cover" alt="Feature 2">
+                    </div>
+                    <p class="text-sm text-slate-700 pt-1">Here Are Several Types Of Blind Text (Placeholder Text) Suitable For Product Descriptions</p>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-20 h-20 bg-white rounded-lg border border-blue-200 flex-shrink-0 shadow-sm overflow-hidden">
+                        <img src="https://picsum.photos/seed/feature-3/200/200" class="w-full h-full object-cover" alt="Feature 3">
+                    </div>
+                    <p class="text-sm text-slate-700 pt-1">Here Are Several Types Of Blind Text (Placeholder Text) Suitable For Product Descriptions</p>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-20 h-20 bg-white rounded-lg border border-blue-200 flex-shrink-0 shadow-sm overflow-hidden">
+                        <img src="https://picsum.photos/seed/feature-4/200/200" class="w-full h-full object-cover" alt="Feature 4">
+                    </div>
+                    <p class="text-sm text-slate-700 pt-1">Here Are Several Types Of Blind Text (Placeholder Text) Suitable For Product Descriptions</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ingredient Section -->
+        <section class="p-6 bg-white/60">
+            <h2 class="text-2xl font-bold text-center mb-8 uppercase tracking-tight">Ingredient</h2>
+            <div class="mb-8 aspect-[3/4] bg-white rounded-2xl border border-blue-200 shadow-inner overflow-hidden">
+                <img src="https://picsum.photos/seed/ingredients-main/600/800" class="w-full h-full object-cover" alt="Ingredients Main">
+            </div>
+            <div class="space-y-6">
+                <div class="flex items-start gap-4">
+                    <div class="w-20 h-20 bg-white rounded-lg border border-blue-200 flex-shrink-0 shadow-sm overflow-hidden">
+                        <img src="https://picsum.photos/seed/ingredient-1/200/200" class="w-full h-full object-cover" alt="Ingredient 1">
+                    </div>
+                    <p class="text-sm text-slate-700 pt-1">Here Are Several Types Of Blind Text (Placeholder Text) Suitable For Product Descriptions</p>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-20 h-20 bg-white rounded-lg border border-blue-200 flex-shrink-0 shadow-sm overflow-hidden">
+                        <img src="https://picsum.photos/seed/ingredient-2/200/200" class="w-full h-full object-cover" alt="Ingredient 2">
+                    </div>
+                    <p class="text-sm text-slate-700 pt-1">Here Are Several Types Of Blind Text (Placeholder Text) Suitable For Product Descriptions</p>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-20 h-20 bg-white rounded-lg border border-blue-200 flex-shrink-0 shadow-sm overflow-hidden">
+                        <img src="https://picsum.photos/seed/ingredient-3/200/200" class="w-full h-full object-cover" alt="Ingredient 3">
+                    </div>
+                    <p class="text-sm text-slate-700 pt-1">Here Are Several Types Of Blind Text (Placeholder Text) Suitable For Product Descriptions</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="p-6">
+            <h2 class="text-2xl font-bold text-center mb-8 flex items-center justify-center gap-2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Testimonial
+            </h2>
+            <div class="flex gap-4 overflow-x-auto pb-4 snap-x no-scrollbar">
+                <div class="flex-shrink-0 w-64 aspect-[9/16] bg-white rounded-2xl border border-blue-200 shadow-md snap-center overflow-hidden">
+                    <img src="https://picsum.photos/seed/testimonial-1/400/700" class="w-full h-full object-cover" alt="Testimonial 1">
+                </div>
+                <div class="flex-shrink-0 w-64 aspect-[9/16] bg-white rounded-2xl border border-blue-200 shadow-md snap-center overflow-hidden">
+                    <img src="https://picsum.photos/seed/testimonial-2/400/700" class="w-full h-full object-cover" alt="Testimonial 2">
+                </div>
+                <div class="flex-shrink-0 w-64 aspect-[9/16] bg-white rounded-2xl border border-blue-200 shadow-md snap-center overflow-hidden">
+                    <img src="https://picsum.photos/seed/testimonial-3/400/700" class="w-full h-full object-cover" alt="Testimonial 3">
+                </div>
+            </div>
+        </section>
+
+        <!-- Shipping Detail -->
+        <section class="p-6 bg-white">
+            <h2 class="text-2xl font-bold text-center mb-8 uppercase tracking-tight">Shipping Detail</h2>
+            <div class="aspect-[16/9] bg-slate-100 rounded-2xl border-2 border-dashed border-slate-300 flex items-center justify-center overflow-hidden relative">
+                <img src="https://picsum.photos/seed/shipping-map/800/450" class="w-full h-full object-cover opacity-80" alt="Shipping Map">
+                <div class="absolute flex flex-col items-center text-slate-400">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4 7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+                    <span class="font-bold text-2xl">IMG</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fixed Bottom Bar -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-blue-100 p-4 flex items-center gap-4 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50 max-w-md mx-auto">
+            <a href="https://wa.me/yournumber" class="flex-1 bg-[#4ADE80] hover:bg-[#22C55E] text-slate-900 font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors active:scale-95">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></svg>
+                Whatsapp
+            </a>
+            <div class="bg-blue-100 px-6 py-4 rounded-xl border border-blue-200">
+                <span class="text-xl font-black text-blue-900">RM168</span>
             </div>
         </div>
 
-        <!-- 缩略图控制器 -->
-        <div class="gallery-thumbs grid grid-cols-4 gap-3">
-            <label for="img-1" class="aspect-square rounded-xl border-2 border-blue-200 opacity-70 overflow-hidden cursor-pointer transition-all">
-                <img src="https://picsum.photos/seed/product-main/200/200" class="w-full h-full object-cover">
-            </label>
-            <label for="img-2" class="aspect-square rounded-xl border-2 border-blue-200 opacity-70 overflow-hidden cursor-pointer transition-all">
-                <img src="https://picsum.photos/seed/prd-img-1/200/200" class="w-full h-full object-cover">
-            </label>
-            <label for="img-3" class="aspect-square rounded-xl border-2 border-blue-200 opacity-70 overflow-hidden cursor-pointer transition-all">
-                <img src="https://picsum.photos/seed/prd-img-2/200/200" class="w-full h-full object-cover">
-            </label>
-            <label for="img-4" class="aspect-square rounded-xl border-2 border-blue-200 opacity-70 overflow-hidden cursor-pointer transition-all">
-                <img src="https://picsum.photos/seed/prd-img-3/200/200" class="w-full h-full object-cover">
-            </label>
-        </div>
-    </section>
-
-    <!-- Product Description -->
-    <section class="p-6 bg-white/40 border-y border-blue-200 max-w-md mx-auto">
-        <h2 class="text-xl font-bold mb-3 flex items-center gap-2">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-            Product Description
-        </h2>
-        <p class="text-slate-700 leading-relaxed">
-            这里是产品描述文字，你可以随意修改。这段代码是纯 HTML 和 CSS 编写的，不需要任何复杂的开发环境。
-        </p>
-    </section>
-
-    <!-- Fixed Bottom Bar -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-blue-100 p-4 flex items-center gap-4 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50 max-w-md mx-auto">
-        <a href="https://wa.me/yournumber" class="flex-1 bg-[#4ADE80] hover:bg-[#22C55E] text-slate-900 font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors active:scale-95">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></svg>
-            Whatsapp
-        </a>
-        <div class="bg-blue-100 px-6 py-4 rounded-xl border border-blue-200">
-            <span class="text-xl font-black text-blue-900">RM168</span>
-        </div>
     </div>
 
 </body>
