@@ -91,7 +91,7 @@
             <h2 class="text-[10px] font-bold mb-3 text-slate-400 uppercase tracking-[0.2em]">
                 Product Description
             </h2>
-            <p class="text-slate-600 leading-relaxed text-sm">
+            <p id="prod-desc" class="text-slate-600 leading-relaxed text-sm">
                 Here Are Several Types Of Blind Text (Placeholder Text) Suitable For Product Descriptions, Ranging From Classic Lorem Ipsum To Thematic Variations, Along With Tips On How To Use Them Effectively.
             </p>
         </section>
@@ -183,5 +183,56 @@
 
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  const supabaseUrl = 'https://sereexsifpgpgbhmcdqv.supabase.co'
+  const supabaseKey = 'sb_publishable_IKSbN-NuoTgNDGNzMnmKmw_4CZUrHxV'
+  const supabase = supabase.createClient(supabaseUrl, supabaseKey)
+
+  async function loadProductData() {
+    // 假设我们只取第一行产品数据
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .limit(1)
+      .single()
+
+    if (error) {
+      console.error('Error loading data:', error)
+      return
+    }
+
+    if (data) {
+      // 1. 更新文字内容
+      document.querySelector('h2 + p').innerText = data.description;
+      document.querySelector('.text-lg.font-black').innerText = data.price;
+      
+      // 2. 更新 WhatsApp 链接
+      const waLink = `https://wa.me/${data.wa_number}?text=我想询问：${encodeURIComponent(data.name)}`;
+      document.querySelector('a[href^="https://wa.me"]').href = waLink;
+
+      // 3. 更新图片 (主图和缩略图)
+      const images = [data.image_1, data.image_2, data.image_3, data.image_4];
+      
+      // 更新大图
+      images.forEach((imgUrl, index) => {
+        const imgElement = document.querySelector(`.img-${index + 1}`);
+        if (imgElement && imgUrl) imgElement.src = imgUrl;
+      });
+
+      // 更新缩略图
+      const thumbLabels = document.querySelectorAll('.gallery-thumbs img');
+      images.forEach((imgUrl, index) => {
+        if (thumbLabels[index] && imgUrl) thumbLabels[index].src = imgUrl;
+      });
+    }
+  }
+
+  // 页面加载时运行
+  loadProductData();
+</script>
+
+    
 </body>
 </html>
