@@ -58,32 +58,28 @@
             <input type="radio" name="gallery" id="img-4" class="hidden">
 
             <!-- Large Image Display Area -->
-            <div class="gallery-main aspect-square bg-slate-50 rounded-xl overflow-hidden border border-slate-100 relative shadow-sm">
-                <img src="https://picsum.photos/seed/product-main/800/800" class="img-1 absolute inset-0 w-full h-full object-cover hidden" alt="Product 1">
-                <img src="https://picsum.photos/seed/prd-img-1/800/800" class="img-2 absolute inset-0 w-full h-full object-cover hidden" alt="Product 2">
-                <img src="https://picsum.photos/seed/prd-img-2/800/800" class="img-3 absolute inset-0 w-full h-full object-cover hidden" alt="Product 3">
-                <img src="https://picsum.photos/seed/prd-img-3/800/800" class="img-4 absolute inset-0 w-full h-full object-cover hidden" alt="Product 4">
-                
-                <div class="absolute inset-0 flex items-center justify-center bg-black/5 pointer-events-none">
-                    <span class="text-slate-300/20 font-bold text-xl uppercase tracking-[0.3em]">Product Images</span>
-                </div>
-            </div>
+    <div class="gallery-main ...">
+        <img id="main-1" src="" class="img-1 absolute inset-0 w-full h-full object-cover hidden" alt="Product 1">
+        <img id="main-2" src="" class="img-2 absolute inset-0 w-full h-full object-cover hidden" alt="Product 2">
+        <img id="main-3" src="" class="img-3 absolute inset-0 w-full h-full object-cover hidden" alt="Product 3">
+        <img id="main-4" src="" class="img-4 absolute inset-0 w-full h-full object-cover hidden" alt="Product 4">
+        ...
+    </div>
 
-            <!-- Thumbnail Controllers -->
-            <div class="gallery-thumbs grid grid-cols-4 gap-3">
-                <label for="img-1" class="aspect-square rounded-lg border border-slate-100 opacity-60 overflow-hidden cursor-pointer transition-all">
-                    <img src="https://picsum.photos/seed/product-main/200/200" class="w-full h-full object-cover" alt="Thumb 1">
-                </label>
-                <label for="img-2" class="aspect-square rounded-lg border border-slate-100 opacity-60 overflow-hidden cursor-pointer transition-all">
-                    <img src="https://picsum.photos/seed/prd-img-1/200/200" class="w-full h-full object-cover" alt="Thumb 2">
-                </label>
-                <label for="img-3" class="aspect-square rounded-lg border border-slate-100 opacity-60 overflow-hidden cursor-pointer transition-all">
-                    <img src="https://picsum.photos/seed/prd-img-2/200/200" class="w-full h-full object-cover" alt="Thumb 3">
-                </label>
-                <label for="img-4" class="aspect-square rounded-lg border border-slate-100 opacity-60 overflow-hidden cursor-pointer transition-all">
-                    <img src="https://picsum.photos/seed/prd-img-3/200/200" class="w-full h-full object-cover" alt="Thumb 4">
-                </label>
-            </div>
+    <div class="gallery-thumbs ...">
+        <label for="img-1" ...>
+            <img id="thumb-1" src="" class="w-full h-full object-cover" alt="Thumb 1">
+        </label>
+        <label for="img-2" ...>
+            <img id="thumb-2" src="" class="w-full h-full object-cover" alt="Thumb 2">
+        </label>
+        <label for="img-3" ...>
+            <img id="thumb-3" src="" class="w-full h-full object-cover" alt="Thumb 3">
+        </label>
+        <label for="img-4" ...>
+            <img id="thumb-4" src="" class="w-full h-full object-cover" alt="Thumb 4">
+        </label>
+    </div>
         </section>
 
         <!-- Product Description -->
