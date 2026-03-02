@@ -188,7 +188,7 @@
   async function loadProductData() {
     console.log("正在尝试从 Supabase 读取数据...");
     
-    // 🚩 请确保你的表名是大写 'Products'
+    // 从 Products 表中获取第一条数据
     const { data, error } = await _supabase
       .from('Products') 
       .select('*')
@@ -203,9 +203,8 @@
     if (data) {
       console.log('成功拿到数据：', data);
 
-      // 1. 处理图片 (根据你表里的列名 image_1, image_2... 调整)
+      // --- 1. 处理图片 (解决图片过大/比例不对的问题) ---
       for (let i = 1; i <= 4; i++) {
-        // 如果你表里的列名是 image_1，请确保下面写对
         const imageUrl = data[`image_${i}`] || data[`img${i}`]; 
         
         if (imageUrl) {
@@ -213,38 +212,52 @@
           const mainImg = document.getElementById(`main-${i}`);
           if (mainImg) {
             mainImg.src = imageUrl;
-            mainImg.style.display = (i === 1) ? 'block' : 'none'; // 默认只显示第一张
+            // 核心修复：确保图片加载后也是裁剪填满模式，不会撑开
+            mainImg.style.objectFit = "cover"; 
+            // 默认显示第一张
+            if (i === 1) {
+                mainImg.classList.remove('hidden');
+                mainImg.style.display = 'block';
+            }
           }
           
           // 更新缩略图
           const thumbImg = document.getElementById(`thumb-${i}`);
-          if (thumbImg) thumbImg.src = imageUrl;
+          if (thumbImg) {
+            thumbImg.src = imageUrl;
+            thumbImg.style.objectFit = "cover";
+          }
         }
       }
 
-      // 2. 更新描述
+      // --- 2. 更新描述 ---
       const descElement = document.getElementById('prod-desc');
       if (descElement) {
         descElement.innerText = data.description || "暂无描述";
       }
 
-      // 3. 更新价格
+      // --- 3. 更新价格 ---
       const priceElement = document.querySelector('.text-lg.font-black');
       if (priceElement) {
         priceElement.innerText = `RM ${data.price || '0'}`;
       }
       
-      // 4. 更新 WhatsApp 链接 (使用数据库里的电话号码)
+      // --- 4. 更新 WhatsApp 链接 ---
       const waBtn = document.querySelector('a[href^="https://wa.me"]');
       if (waBtn) {
-        const phone = data.wa_number || '60126420820'; // 如果数据库没填，用默认值
-        waBtn.href = `https://wa.me/${phone}?text=我想询问：${encodeURIComponent(data.name || '产品')}`;
+        const phone = data.wa_number || '60126420820';
+        const productName = data.name || '这款产品';
+        waBtn.href = `https://wa.me/${phone}?text=${encodeURIComponent('你好，我想询问关于 ' + productName + ' 的详情')}`;
       }
     }
   }
 
   // 确保页面加载完再运行
-  window.onload = loadProductData;
+  if (document.readyState === 'complete') {
+    loadProductData();
+  } else {
+    window.addEventListener('load', loadProductData);
+  }
 </script>
 
     
