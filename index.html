@@ -63,20 +63,20 @@
         <img id="main-4" src="" class="img-4 absolute inset-0 w-full h-full object-cover hidden" alt="Product 4">
     </div>
 
-    <div class="gallery-thumbs flex gap-3 overflow-x-auto no-scrollbar py-2">
-        <label for="img-1" class="flex-shrink-0 w-20 h-20 border-2 border-transparent rounded-lg overflow-hidden cursor-pointer transition-all">
-            <img id="thumb-1" src="" class="w-full h-full object-cover" alt="Thumb 1">
-        </label>
-        <label for="img-2" class="flex-shrink-0 w-20 h-20 border-2 border-transparent rounded-lg overflow-hidden cursor-pointer transition-all">
-            <img id="thumb-2" src="" class="w-full h-full object-cover" alt="Thumb 2">
-        </label>
-        <label for="img-3" class="flex-shrink-0 w-20 h-20 border-2 border-transparent rounded-lg overflow-hidden cursor-pointer transition-all">
-            <img id="thumb-3" src="" class="w-full h-full object-cover" alt="Thumb 3">
-        </label>
-        <label for="img-4" class="flex-shrink-0 w-20 h-20 border-2 border-transparent rounded-lg overflow-hidden cursor-pointer transition-all">
-            <img id="thumb-4" src="" class="w-full h-full object-cover" alt="Thumb 4">
-        </label>
-    </div>
+<div class="gallery-thumbs flex gap-3 overflow-x-auto no-scrollbar py-2">
+    <label onclick="changeImage(1)" class="flex-shrink-0 w-20 h-20 border-2 border-transparent rounded-lg overflow-hidden cursor-pointer transition-all">
+        <img id="thumb-1" src="" class="w-full h-full object-cover" alt="Thumb 1">
+    </label>
+    <label onclick="changeImage(2)" class="flex-shrink-0 w-20 h-20 border-2 border-transparent rounded-lg overflow-hidden cursor-pointer transition-all">
+        <img id="thumb-2" src="" class="w-full h-full object-cover" alt="Thumb 2">
+    </label>
+    <label onclick="changeImage(3)" class="flex-shrink-0 w-20 h-20 border-2 border-transparent rounded-lg overflow-hidden cursor-pointer transition-all">
+        <img id="thumb-3" src="" class="w-full h-full object-cover" alt="Thumb 3">
+    </label>
+    <label onclick="changeImage(4)" class="flex-shrink-0 w-20 h-20 border-2 border-transparent rounded-lg overflow-hidden cursor-pointer transition-all">
+        <img id="thumb-4" src="" class="w-full h-full object-cover" alt="Thumb 4">
+    </label>
+</div>
 </section>
 
         <!-- Product Description -->
@@ -179,87 +179,71 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-  // 1. 初始化连接
   const supabaseUrl = 'https://sereexsifpgpgbhmcdqv.supabase.co';
   const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlcmVleHNpZnBncGdiaG1jZHF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0MzgwNjcsImV4cCI6MjA4ODAxNDA2N30.6DOdcwdqyu24LaXL96iP9bLfaFnz-B2bsCbFN1aYFqs';
-  
   const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
+  // 切换图片的函数
+  function changeImage(index) {
+    // 1. 隐藏所有大图
+    for (let i = 1; i <= 4; i++) {
+      const img = document.getElementById(`main-${i}`);
+      if (img) img.style.display = 'none';
+      
+      // 2. 取消所有缩略图的高亮边框
+      const thumbLabel = document.querySelector(`label[onclick="changeImage(${i})"]`);
+      if (thumbLabel) thumbLabel.style.borderColor = 'transparent';
+    }
+
+    // 3. 显示当前点击的那张大图
+    const activeImg = document.getElementById(`main-${index}`);
+    if (activeImg && activeImg.src) {
+      activeImg.style.display = 'block';
+      activeImg.style.objectFit = 'cover';
+    }
+
+    // 4. 给当前缩略图加上黑色边框
+    const activeLabel = document.querySelector(`label[onclick="changeImage(${index})"]`);
+    if (activeLabel) activeLabel.style.borderColor = '#0f172a';
+  }
+
   async function loadProductData() {
-    console.log("正在尝试从 Supabase 读取数据...");
-    
-    // 从 Products 表中获取第一条数据
-    const { data, error } = await _supabase
-      .from('Products') 
-      .select('*')
-      .limit(1)
-      .single();
+    const { data, error } = await _supabase.from('Products').select('*').limit(1).single();
 
     if (error) {
-      console.error('读取失败，原因如下：', error);
+      console.error('读取失败:', error);
       return;
     }
 
     if (data) {
-      console.log('成功拿到数据：', data);
-
-      // --- 1. 处理图片 (解决图片过大/比例不对的问题) ---
+      // 加载图片数据
       for (let i = 1; i <= 4; i++) {
         const imageUrl = data[`image_${i}`] || data[`img${i}`]; 
-        
         if (imageUrl) {
-          // 更新大图
           const mainImg = document.getElementById(`main-${i}`);
-          if (mainImg) {
-            mainImg.src = imageUrl;
-            // 核心修复：确保图片加载后也是裁剪填满模式，不会撑开
-            mainImg.style.objectFit = "cover"; 
-            // 默认显示第一张
-            if (i === 1) {
-                mainImg.classList.remove('hidden');
-                mainImg.style.display = 'block';
-            }
-          }
-          
-          // 更新缩略图
           const thumbImg = document.getElementById(`thumb-${i}`);
-          if (thumbImg) {
-            thumbImg.src = imageUrl;
-            thumbImg.style.objectFit = "cover";
-          }
+          if (mainImg) mainImg.src = imageUrl;
+          if (thumbImg) thumbImg.src = imageUrl;
         }
       }
 
-      // --- 2. 更新描述 ---
-      const descElement = document.getElementById('prod-desc');
-      if (descElement) {
-        descElement.innerText = data.description || "暂无描述";
-      }
-
-      // --- 3. 更新价格 ---
+      // 加载其他数据
+      if (document.getElementById('prod-desc')) document.getElementById('prod-desc').innerText = data.description;
       const priceElement = document.querySelector('.text-lg.font-black');
-      if (priceElement) {
-        priceElement.innerText = `RM ${data.price || '0'}`;
-      }
+      if (priceElement) priceElement.innerText = `RM ${data.price}`;
       
-      // --- 4. 更新 WhatsApp 链接 ---
       const waBtn = document.querySelector('a[href^="https://wa.me"]');
       if (waBtn) {
-        const phone = data.wa_number || '60126420820';
-        const productName = data.name || '这款产品';
-        waBtn.href = `https://wa.me/${phone}?text=${encodeURIComponent('你好，我想询问关于 ' + productName + ' 的详情')}`;
+        waBtn.href = `https://wa.me/${data.wa_number || '60126420820'}?text=${encodeURIComponent('你好，我想购买：' + (data.name || '产品'))}`;
       }
+
+      // 初始化：显示第一张图
+      changeImage(1);
     }
   }
 
-  // 确保页面加载完再运行
-  if (document.readyState === 'complete') {
-    loadProductData();
-  } else {
-    window.addEventListener('load', loadProductData);
-  }
+  window.addEventListener('load', loadProductData);
 </script>
-
     
 </body>
 </html>
