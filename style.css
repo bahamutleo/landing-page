@@ -1,65 +1,78 @@
-const supabaseUrl = 'https://sereexsifpgpgbhmcdqv.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlcmVleHNpZnBncGdiaG1jZHF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0MzgwNjcsImV4cCI6MjA4ODAxNDA2N30.6DOdcwdqyu24LaXL96iP9bLfaFnz-B2bsCbFN1aYFqs';
-const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
-function changeImage(index) {
-  for (let i = 1; i <= 4; i++) {
-    const img = document.getElementById(`main-${i}`);
-    if (img) img.style.display = 'none';
-    const thumbLabel = document.querySelector(`label[onclick="changeImage(${i})"]`);
-    if (thumbLabel) thumbLabel.style.borderColor = 'transparent';
-  }
-  const activeImg = document.getElementById(`main-${index}`);
-  if (activeImg && activeImg.src && !activeImg.src.includes('undefined')) {
-    activeImg.style.display = 'block';
-    activeImg.style.objectFit = 'cover';
-  }
-  const activeLabel = document.querySelector(`label[onclick="changeImage(${index})"]`);
-  if (activeLabel) activeLabel.style.borderColor = '#0f172a';
+/* --- [新增] 全局：确保图片占满容器且不拉伸 --- */
+.gallery-main img,
+.gallery-thumbs label img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 核心：裁剪填充，不留白，不拉伸 */
+    object-position: center; /* 居中裁剪 */
 }
 
-async function loadProductData() {
-  const { data, error } = await _supabase.from('Products').select('*').limit(1).single();
-  if (error) return console.error('读取失败:', error);
+/* Pure CSS Image Switching Logic (如果你还在用 CSS 切换) */
+#img-1:checked ~ .gallery-main .img-1 { display: block; }
+#img-2:checked ~ .gallery-main .img-2 { display: block; }
+#img-3:checked ~ .gallery-main .img-3 { display: block; }
+#img-4:checked ~ .gallery-main .img-4 { display: block; }
 
-  if (data) {
-    // 1. 展示图
-    for (let i = 1; i <= 4; i++) {
-      const url = data[`image_${i}`];
-      if (url) {
-        document.getElementById(`main-${i}`).src = url;
-        document.getElementById(`thumb-${i}`).src = url;
-      }
+/* Thumbnail Selection Highlight */
+#img-1:checked ~ .gallery-thumbs label[for="img-1"] { border-color: #0f172a; transform: scale(1.05); opacity: 1; }
+#img-2:checked ~ .gallery-thumbs label[for="img-2"] { border-color: #0f172a; transform: scale(1.05); opacity: 1; }
+#img-3:checked ~ .gallery-thumbs label[for="img-3"] { border-color: #0f172a; transform: scale(1.05); opacity: 1; }
+#img-4:checked ~ .gallery-thumbs label[for="img-4"] { border-color: #0f172a; transform: scale(1.05); opacity: 1; }
 
-      // --- 6. 加载 Logo ---
-  const logoImg = document.getElementById('site-logo');
-  if (logoImg && data.logo_url) {
-      logoImg.src = data.logo_url;
-  } else if (logoImg) {
-      // 如果数据库没填链接，可以设置一个默认占位图或者隐藏
-      logoImg.alt = "Brand Logo";
-  }
-      
-    }
-    // 2. 6大功能
-    for (let i = 1; i <= 6; i++) {
-      if (data[`feature_img_${i}`]) document.getElementById(`feature-img-${i}`).src = data[`feature_img_${i}`];
-      if (data[`feature_text_${i}`]) document.getElementById(`feature-text-${i}`).innerText = data[`feature_text_${i}`];
-    }
-    // 3. 成分与反馈
-    if (data.ing_main) document.getElementById('ing-main').src = data.ing_main;
-    if (data.ing_icon_1) document.getElementById('ing-icon-1').src = data.ing_icon_1;
-    if (data.ing_desc_1) document.getElementById('ing-desc-1').innerText = data.ing_desc_1;
-    if (data.testi_img_1) document.getElementById('testi-1').src = data.testi_img_1;
-    if (data.testi_img_2) document.getElementById('testi-2').src = data.testi_img_2;
+/* Hide Scrollbar Utility */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    // 4. 基础信息
-    document.getElementById('prod-desc').innerText = data.description || "";
-    document.getElementById('price-tag').innerText = `RM ${data.price || "0"}`;
-    document.getElementById('wa-link').href = `https://wa.me/${data.wa_number || '60126420820'}?text=Hi, 我想买 ${data.name}`;
+/* Smooth Transitions */
+.gallery-main img { transition: opacity 0.3s ease-in-out; }
 
-    changeImage(1);
-  }
+/* --- [新增] 主图容器：强制 1:1 正方形 (参考图02) --- */
+.gallery-main {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1; /* 强制设为正方形 */
+    background-color: #f1f5f9; /* slate-100 占位色 */
+    border-radius: 0.75rem; /* rounded-xl */
+    overflow: hidden;
 }
 
-window.addEventListener('load', loadProductData);
+/* --- [新增] 缩略图标签：固定大小并处理边框 --- */
+.gallery-thumbs label {
+    flex-shrink: 0;
+    width: 5rem; /* w-20 (80px) */
+    height: 5rem; /* h-20 (80px) */
+    border-width: 2px;
+    border-color: transparent;
+    border-radius: 0.5rem; /* rounded-lg */
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: block; /* 确保 img 能占满 */
+}
+
+/* Smooth Transitions */
+.gallery-main img { transition: opacity 0.3s ease-in-out; }
+
+
+.custom-header {
+    background-color: #000000; /* 纯黑 */
+    padding: 0.7rem;            /* 对应 py-4 */
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #1e293b; /* 给黑色背景加一个深色的边框线，增加质感 */
+}
+
+.logo-container {
+    width: 182px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#site-logo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
