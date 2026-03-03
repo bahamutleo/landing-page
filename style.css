@@ -1,78 +1,54 @@
-/* --- [新增] 全局：确保图片占满容器且不拉伸 --- */
-.gallery-main img,
-.gallery-thumbs label img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 核心：裁剪填充，不留白，不拉伸 */
-    object-position: center; /* 居中裁剪 */
+/* 1. 核心修复：强制所有图片区域大图填充，不留白 */
+#main-1, #main-2, #main-3, #main-4,
+#thumb-1, #thumb-2, #thumb-3, #thumb-4,
+#feature-img-1, #feature-img-2, #feature-img-3, #feature-img-4, #feature-img-5, #feature-img-6,
+#ing-main, #ing-icon-1, #testi-1, #testi-2, #site-logo {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
 }
 
-/* Pure CSS Image Switching Logic (如果你还在用 CSS 切换) */
-#img-1:checked ~ .gallery-main .img-1 { display: block; }
-#img-2:checked ~ .gallery-main .img-2 { display: block; }
-#img-3:checked ~ .gallery-main .img-3 { display: block; }
-#img-4:checked ~ .gallery-main .img-4 { display: block; }
+/* Logo 比较特殊，使用 contain 保证不被裁剪 */
+#site-logo {
+    object-fit: contain !important;
+}
 
-/* Thumbnail Selection Highlight */
-#img-1:checked ~ .gallery-thumbs label[for="img-1"] { border-color: #0f172a; transform: scale(1.05); opacity: 1; }
-#img-2:checked ~ .gallery-thumbs label[for="img-2"] { border-color: #0f172a; transform: scale(1.05); opacity: 1; }
-#img-3:checked ~ .gallery-thumbs label[for="img-3"] { border-color: #0f172a; transform: scale(1.05); opacity: 1; }
-#img-4:checked ~ .gallery-thumbs label[for="img-4"] { border-color: #0f172a; transform: scale(1.05); opacity: 1; }
-
-/* Hide Scrollbar Utility */
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-/* Smooth Transitions */
-.gallery-main img { transition: opacity 0.3s ease-in-out; }
-
-/* --- [新增] 主图容器：强制 1:1 正方形 (参考图02) --- */
+/* 2. 主图容器：强制 1:1 正方形 */
 .gallery-main {
-    position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1; /* 强制设为正方形 */
-    background-color: #f1f5f9; /* slate-100 占位色 */
-    border-radius: 0.75rem; /* rounded-xl */
+    aspect-ratio: 1 / 1;
+    background-color: #f8fafc;
+    border-radius: 0.75rem;
     overflow: hidden;
 }
 
-/* --- [新增] 缩略图标签：固定大小并处理边框 --- */
+/* 3. 缩略图样式 */
 .gallery-thumbs label {
     flex-shrink: 0;
-    width: 5rem; /* w-20 (80px) */
-    height: 5rem; /* h-20 (80px) */
-    border-width: 2px;
-    border-color: transparent;
-    border-radius: 0.5rem; /* rounded-lg */
+    width: 5rem;
+    height: 5rem;
+    border: 2px solid transparent;
+    border-radius: 0.5rem;
     overflow: hidden;
     cursor: pointer;
-    transition: all 0.2s;
-    display: block; /* 确保 img 能占满 */
+    transition: 0.2s;
 }
 
-/* Smooth Transitions */
-.gallery-main img { transition: opacity 0.3s ease-in-out; }
-
-
+/* 4. 黑色 Header 样式 */
 .custom-header {
-    background-color: #000000; /* 纯黑 */
-    padding: 0.7rem;            /* 对应 py-4 */
+    background-color: #000000;
+    padding: 0.7rem;
     display: flex;
     justify-content: center;
-    border-bottom: 1px solid #1e293b; /* 给黑色背景加一个深色的边框线，增加质感 */
 }
-
 .logo-container {
     width: 182px;
     height: 55px;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
 }
 
-#site-logo {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-}
+/* 5. 辅助工具 */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
