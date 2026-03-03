@@ -1,4 +1,13 @@
-/* Pure CSS Image Switching Logic (Radio Button Hack) */
+/* --- [新增] 全局：确保图片占满容器且不拉伸 --- */
+.gallery-main img,
+.gallery-thumbs label img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 核心：裁剪填充，不留白，不拉伸 */
+    object-position: center; /* 居中裁剪 */
+}
+
+/* Pure CSS Image Switching Logic (如果你还在用 CSS 切换) */
 #img-1:checked ~ .gallery-main .img-1 { display: block; }
 #img-2:checked ~ .gallery-main .img-2 { display: block; }
 #img-3:checked ~ .gallery-main .img-3 { display: block; }
@@ -13,6 +22,33 @@
 /* Hide Scrollbar Utility */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Smooth Transitions */
+.gallery-main img { transition: opacity 0.3s ease-in-out; }
+
+/* --- [新增] 主图容器：强制 1:1 正方形 (参考图02) --- */
+.gallery-main {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1; /* 强制设为正方形 */
+    background-color: #f1f5f9; /* slate-100 占位色 */
+    border-radius: 0.75rem; /* rounded-xl */
+    overflow: hidden;
+}
+
+/* --- [新增] 缩略图标签：固定大小并处理边框 --- */
+.gallery-thumbs label {
+    flex-shrink: 0;
+    width: 5rem; /* w-20 (80px) */
+    height: 5rem; /* h-20 (80px) */
+    border-width: 2px;
+    border-color: transparent;
+    border-radius: 0.5rem; /* rounded-lg */
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: block; /* 确保 img 能占满 */
+}
 
 /* Smooth Transitions */
 .gallery-main img { transition: opacity 0.3s ease-in-out; }
