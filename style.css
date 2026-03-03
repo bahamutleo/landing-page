@@ -20,7 +20,7 @@
 
 .custom-header {
     background-color: #000000; /* 纯黑 */
-    padding: 1rem;            /* 对应 py-4 */
+    padding: 0.7rem;            /* 对应 py-4 */
     display: flex;
     justify-content: center;
     border-bottom: 1px solid #1e293b; /* 给黑色背景加一个深色的边框线，增加质感 */
