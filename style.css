@@ -105,3 +105,23 @@
     height: 100% !important;
     object-fit: cover !important;
 }
+
+/* 跑马灯容器动画 */
+.marquee-content {
+    display: inline-flex;
+    animation: marquee 15s linear infinite; /* 15s 控制速度，越小越快 */
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%); /* 移动到一半实现无缝衔接 */
+    }
+}
+
+/* 鼠标悬停时暂停，方便阅读 */
+.marquee-content:hover {
+    animation-play-state: paused;
+}
