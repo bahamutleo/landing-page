@@ -4,270 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minimalist Product Landing Page</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Pure CSS Image Switching Logic (Radio Button Hack) */
-        #img-1:checked ~ .gallery-main .img-1 { display: block; }
-        #img-2:checked ~ .gallery-main .img-2 { display: block; }
-        #img-3:checked ~ .gallery-main .img-3 { display: block; }
-        #img-4:checked ~ .gallery-main .img-4 { display: block; }
-        
-        /* Thumbnail Selection Highlight */
-        #img-1:checked ~ .gallery-thumbs label[for="img-1"] { border-color: #0f172a; transform: scale(1.05); opacity: 1; }
-        #img-2:checked ~ .gallery-thumbs label[for="img-2"] { border-color: #0f172a; transform: scale(1.05); opacity: 1; }
-        #img-3:checked ~ .gallery-thumbs label[for="img-3"] { border-color: #0f172a; transform: scale(1.05); opacity: 1; }
-        #img-4:checked ~ .gallery-thumbs label[for="img-4"] { border-color: #0f172a; transform: scale(1.05); opacity: 1; }
-
-        /* Hide Scrollbar Utility */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* Smooth Transitions */
-        .gallery-main img { transition: opacity 0.3s ease-in-out; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-white font-sans text-slate-900 pb-24">
-
     <div class="max-w-md mx-auto bg-white min-h-screen relative shadow-sm">
         
-        <!-- Top Banner -->
         <div class="bg-black py-2 px-4 text-center">
             <p class="text-[10px] font-bold flex items-center justify-center gap-2 text-white uppercase tracking-[0.2em]">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-2.235-2.767A1 1 0 0 0 18.77 9H15v9"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-2.235-2.767A1 1 0 0 0 18.77 9H15v9"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
                 Shipping take 1-3 days
             </p>
         </div>
 
-        <!-- Header with Logo -->
         <header class="py-4 px-4 flex justify-center border-b border-slate-50">
-            <!-- Replace the SVG below with your actual logo SVG -->
-            <svg width="250" height="60" viewBox="0 0 250 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="max-w-full h-auto">
-                <rect width="250" height="60" fill="#f8fafc" rx="8"/>
-                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#0f172a">LOGO (250x60)</text>
-                <rect x="2" y="2" width="246" height="56" rx="6" stroke="#e2e8f0" stroke-dasharray="4 4"/>
-            </svg>
+            <div class="text-xl font-black tracking-tighter">BRAND LOGO</div>
         </header>
 
-        <!-- Hero Section / Product Images (Pure CSS Gallery) -->
-<section class="p-4 space-y-4 relative">
-    <input type="radio" name="gallery" id="img-1" class="hidden" checked>
-    <input type="radio" name="gallery" id="img-2" class="hidden">
-    <input type="radio" name="gallery" id="img-3" class="hidden">
-    <input type="radio" name="gallery" id="img-4" class="hidden">
+        <section class="p-4 space-y-4 relative">
+            <input type="radio" name="gallery" id="img-1" class="hidden" checked>
+            <input type="radio" name="gallery" id="img-2" class="hidden">
+            <input type="radio" name="gallery" id="img-3" class="hidden">
+            <input type="radio" name="gallery" id="img-4" class="hidden">
 
-    <div class="gallery-main relative w-full aspect-square bg-slate-100 rounded-xl overflow-hidden shadow-inner">
-        <img id="main-1" src="" class="img-1 absolute inset-0 w-full h-full object-cover hidden" alt="Product 1">
-        <img id="main-2" src="" class="img-2 absolute inset-0 w-full h-full object-cover hidden" alt="Product 2">
-        <img id="main-3" src="" class="img-3 absolute inset-0 w-full h-full object-cover hidden" alt="Product 3">
-        <img id="main-4" src="" class="img-4 absolute inset-0 w-full h-full object-cover hidden" alt="Product 4">
-    </div>
+            <div class="gallery-main relative w-full aspect-square bg-slate-100 rounded-xl overflow-hidden">
+                <img id="main-1" src="" class="img-1 absolute inset-0 w-full h-full object-cover hidden">
+                <img id="main-2" src="" class="img-2 absolute inset-0 w-full h-full object-cover hidden">
+                <img id="main-3" src="" class="img-3 absolute inset-0 w-full h-full object-cover hidden">
+                <img id="main-4" src="" class="img-4 absolute inset-0 w-full h-full object-cover hidden">
+            </div>
 
-    <div class="gallery-thumbs flex gap-3 overflow-x-auto no-scrollbar py-2">
-        <label onclick="changeImage(1)" class="flex-shrink-0 w-20 h-20 border-2 border-transparent rounded-lg overflow-hidden cursor-pointer transition-all">
-            <img id="thumb-1" src="" class="w-full h-full object-cover" alt="Thumb 1">
-        </label>
-        <label onclick="changeImage(2)" class="flex-shrink-0 w-20 h-20 border-2 border-transparent rounded-lg overflow-hidden cursor-pointer transition-all">
-            <img id="thumb-2" src="" class="w-full h-full object-cover" alt="Thumb 2">
-        </label>
-        <label onclick="changeImage(3)" class="flex-shrink-0 w-20 h-20 border-2 border-transparent rounded-lg overflow-hidden cursor-pointer transition-all">
-            <img id="thumb-3" src="" class="w-full h-full object-cover" alt="Thumb 3">
-        </label>
-        <label onclick="changeImage(4)" class="flex-shrink-0 w-20 h-20 border-2 border-transparent rounded-lg overflow-hidden cursor-pointer transition-all">
-            <img id="thumb-4" src="" class="w-full h-full object-cover" alt="Thumb 4">
-        </label>
-    </div>
-    </section>
+            <div class="gallery-thumbs flex gap-3 overflow-x-auto no-scrollbar py-2">
+                <label onclick="changeImage(1)" class="flex-shrink-0 w-20 h-20 border-2 rounded-lg overflow-hidden cursor-pointer"><img id="thumb-1" src="" class="w-full h-full object-cover"></label>
+                <label onclick="changeImage(2)" class="flex-shrink-0 w-20 h-20 border-2 rounded-lg overflow-hidden cursor-pointer"><img id="thumb-2" src="" class="w-full h-full object-cover"></label>
+                <label onclick="changeImage(3)" class="flex-shrink-0 w-20 h-20 border-2 rounded-lg overflow-hidden cursor-pointer"><img id="thumb-3" src="" class="w-full h-full object-cover"></label>
+                <label onclick="changeImage(4)" class="flex-shrink-0 w-20 h-20 border-2 rounded-lg overflow-hidden cursor-pointer"><img id="thumb-4" src="" class="w-full h-full object-cover"></label>
+            </div>
+        </section>
 
-        <!-- Product Description -->
-            <section class="p-6 border-y border-slate-50">
-                <h2 class="text-[10px] font-bold mb-3 text-slate-400 uppercase tracking-[0.2em]">
-                    Product Description
-                </h2>
-                <p id="prod-desc" class="text-slate-600 leading-relaxed text-sm">
-                    Here Are Several Types Of Blind Text (Placeholder Text) Suitable For Product Descriptions, Ranging From Classic Lorem Ipsum To Thematic Variations, Along With Tips On How To Use Them Effectively.
-                </p>
-            </section>
+        <section class="p-6 border-y border-slate-50">
+            <h2 class="text-[10px] font-bold mb-3 text-slate-400 uppercase tracking-[0.2em]">Product Description</h2>
+            <p id="prod-desc" class="text-slate-600 leading-relaxed text-sm">Loading...</p>
+        </section>
 
-        <!-- Features -->
-            <section class="p-6">
+        <section class="p-6">
             <div class="text-center mb-12">
-                <div class="inline-block relative">
-                    <h2 class="text-4xl font-black tracking-tighter text-slate-900 relative z-10">6大核心功能</h2>
-                    <div class="absolute -bottom-1 left-0 w-full h-3 bg-slate-100 -z-0"></div>
-                </div>
-                <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-300 mt-2">Features</p>
+                <h2 class="text-4xl font-black tracking-tighter text-slate-900">6大核心功能</h2>
+                <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-300">Features</p>
             </div>
             <div class="space-y-10">
-                <div class="flex items-center gap-6">
-                    <div class="w-16 h-16 bg-slate-50 rounded-full border border-slate-100 flex-shrink-0 overflow-hidden">
-                        <img src="https://picsum.photos/seed/feature-1/200/200" class="w-full h-full object-cover grayscale opacity-70" alt="Feature 1">
-                    </div>
-                    <p class="text-[11px] text-slate-500 leading-relaxed">澎湃动力，持久续航：有效改善疲劳状态，提升战斗力，让你在关键时刻从容不迫。</p>
-                </div>
-                <div class="flex items-center gap-6">
-                    <div class="w-16 h-16 bg-slate-50 rounded-full border border-slate-100 flex-shrink-0 overflow-hidden">
-                        <img src="https://picsum.photos/seed/feature-2/200/200" class="w-full h-full object-cover grayscale opacity-70" alt="Feature 2">
-                    </div>
-                    <p class="text-[11px] text-slate-500 leading-relaxed">激发荷尔蒙，找回状态：自然调节体内激素平衡，告别由于压力和年龄带来的“力不从心”。</p>
-                </div>
-                <div class="flex items-center gap-6">
-                    <div class="w-16 h-16 bg-slate-50 rounded-full border border-slate-100 flex-shrink-0 overflow-hidden">
-                        <img src="https://picsum.photos/seed/feature-3/200/200" class="w-full h-full object-cover grayscale opacity-70" alt="Feature 3">
-                    </div>
-                    <p class="text-[11px] text-slate-500 leading-relaxed">深层补给，修复亏损：针对长期熬夜、烟酒过度导致的身体透支进行深度营养修复。</p>
-                </div>
-                <div class="flex items-center gap-6">
-                    <div class="w-16 h-16 bg-slate-50 rounded-full border border-slate-100 flex-shrink-0 overflow-hidden">
-                        <img src="https://picsum.photos/seed/feature-3/200/200" class="w-full h-full object-cover grayscale opacity-70" alt="Feature 3">
-                    </div>
-                    <p class="text-[11px] text-slate-500 leading-relaxed">提升精力和专注力：不仅是身体，更是精神的振奋，让你在职场与生活中时刻保持高昂斗志。</p>
-                </div>
-                 <div class="flex items-center gap-6">
-                    <div class="w-16 h-16 bg-slate-50 rounded-full border border-slate-100 flex-shrink-0 overflow-hidden">
-                        <img src="https://picsum.photos/seed/feature-3/200/200" class="w-full h-full object-cover grayscale opacity-70" alt="Feature 3">
-                    </div>
-                    <p class="text-[11px] text-slate-500 leading-relaxed">强健体质，稳固根基：优化循环系统，提升耐力与爆发力，打好男人的“底子”。</p>
-                </div>
-                  <div class="flex items-center gap-6">
-                    <div class="w-16 h-16 bg-slate-50 rounded-full border border-slate-100 flex-shrink-0 overflow-hidden">
-                        <img src="https://picsum.photos/seed/feature-3/200/200" class="w-full h-full object-cover grayscale opacity-70" alt="Feature 3">
-                    </div>
-                    <p class="text-[11px] text-slate-500 leading-relaxed">自信回归，魅力加倍：由内而外的蜕变，让你掌控每一个夜晚，重拾男人的尊严与自信。</p>
-                </div>
+                <div class="flex items-center gap-6"><div class="w-16 h-16 bg-slate-50 rounded-full overflow-hidden flex-shrink-0"><img id="feature-img-1" src="" class="w-full h-full object-cover grayscale opacity-70"></div><p id="feature-text-1" class="text-[11px] text-slate-500">Loading...</p></div>
+                <div class="flex items-center gap-6"><div class="w-16 h-16 bg-slate-50 rounded-full overflow-hidden flex-shrink-0"><img id="feature-img-2" src="" class="w-full h-full object-cover grayscale opacity-70"></div><p id="feature-text-2" class="text-[11px] text-slate-500">Loading...</p></div>
+                <div class="flex items-center gap-6"><div class="w-16 h-16 bg-slate-50 rounded-full overflow-hidden flex-shrink-0"><img id="feature-img-3" src="" class="w-full h-full object-cover grayscale opacity-70"></div><p id="feature-text-3" class="text-[11px] text-slate-500">Loading...</p></div>
+                <div class="flex items-center gap-6"><div class="w-16 h-16 bg-slate-50 rounded-full overflow-hidden flex-shrink-0"><img id="feature-img-4" src="" class="w-full h-full object-cover grayscale opacity-70"></div><p id="feature-text-4" class="text-[11px] text-slate-500">Loading...</p></div>
+                <div class="flex items-center gap-6"><div class="w-16 h-16 bg-slate-50 rounded-full overflow-hidden flex-shrink-0"><img id="feature-img-5" src="" class="w-full h-full object-cover grayscale opacity-70"></div><p id="feature-text-5" class="text-[11px] text-slate-500">Loading...</p></div>
+                <div class="flex items-center gap-6"><div class="w-16 h-16 bg-slate-50 rounded-full overflow-hidden flex-shrink-0"><img id="feature-img-6" src="" class="w-full h-full object-cover grayscale opacity-70"></div><p id="feature-text-6" class="text-[11px] text-slate-500">Loading...</p></div>
             </div>
         </section>
 
-        <!-- Ingredient Section -->
-        <section class="p-6 bg-slate-50">
-            <h2 class="text-[10px] font-bold text-center mb-8 uppercase tracking-[0.3em] text-slate-400">Ingredient</h2>
-            <div class="mb-8 aspect-[3/4] bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
-                <img src="https://picsum.photos/seed/ingredients-main/600/800" class="w-full h-full object-cover grayscale opacity-80" alt="Ingredients Main">
-            </div>
-            <div class="space-y-6">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-white rounded-lg border border-slate-100 flex-shrink-0 overflow-hidden">
-                        <img src="https://picsum.photos/seed/ingredient-1/200/200" class="w-full h-full object-cover grayscale" alt="Ingredient 1">
-                    </div>
-                    <p class="text-[10px] text-slate-400 uppercase tracking-widest">Placeholder Ingredient Description</p>
-                </div>
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-white rounded-lg border border-slate-100 flex-shrink-0 overflow-hidden">
-                        <img src="https://picsum.photos/seed/ingredient-2/200/200" class="w-full h-full object-cover grayscale" alt="Ingredient 2">
-                    </div>
-                    <p class="text-[10px] text-slate-400 uppercase tracking-widest">Placeholder Ingredient Description</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Testimonials -->
-        <section class="p-6">
-            <h2 class="text-[10px] font-bold text-center mb-8 uppercase tracking-[0.3em] text-slate-300">Testimonial</h2>
-            <div class="flex gap-4 overflow-x-auto pb-4 snap-x no-scrollbar">
-                <div class="flex-shrink-0 w-64 aspect-[9/16] bg-white rounded-xl border border-slate-100 shadow-sm snap-center overflow-hidden">
-                    <img src="https://picsum.photos/seed/testimonial-1/400/700" class="w-full h-full object-cover grayscale opacity-70" alt="Testimonial 1">
-                </div>
-                <div class="flex-shrink-0 w-64 aspect-[9/16] bg-white rounded-xl border border-slate-100 shadow-sm snap-center overflow-hidden">
-                    <img src="https://picsum.photos/seed/testimonial-2/400/700" class="w-full h-full object-cover grayscale opacity-70" alt="Testimonial 2">
-                </div>
-            </div>
-        </section>
-
-        <!-- Shipping Detail -->
-        <section class="p-6 bg-white">
-            <h2 class="text-[10px] font-bold text-center mb-8 uppercase tracking-[0.3em] text-slate-300">Shipping Detail</h2>
-            <div class="aspect-[16/9] bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center overflow-hidden relative">
-                <img src="https://picsum.photos/seed/shipping-map/800/450" class="w-full h-full object-cover grayscale opacity-20" alt="Shipping Map">
-                <div class="absolute flex flex-col items-center text-slate-200">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4 7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
-                    <span class="font-bold text-lg mt-2 tracking-widest">IMG</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Fixed Bottom Bar -->
-        <div class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-100 p-2 flex items-center gap-3 z-50 max-w-md mx-auto">
-            <a href="https://wa.me/60126420820?text=hi,我想购买RM168的产品" class="flex-[3] bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-colors active:scale-95">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .018 5.396.015 12.03c0 2.12.542 4.19 1.57 6.05L0 24l6.12-1.605a11.845 11.845 0 005.925 1.577h.005c6.632 0 12.028-5.398 12.03-12.03a11.85 11.85 0 00-3.527-8.44z"/>
-                </svg>
-                Whatsapp
-            </a>
-            <div class="flex-1 text-center">
-                <span class="text-lg font-black text-slate-900">RM168</span>
-            </div>
+        <div class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t p-2 flex items-center gap-3 z-50 max-w-md mx-auto">
+            <a href="#" class="flex-[3] bg-[#25D366] text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2">Whatsapp</a>
+            <div class="flex-1 text-center font-black text-slate-900 text-lg">RM--</div>
         </div>
-
     </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-  const supabaseUrl = 'https://sereexsifpgpgbhmcdqv.supabase.co';
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlcmVleHNpZnBncGdiaG1jZHF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0MzgwNjcsImV4cCI6MjA4ODAxNDA2N30.6DOdcwdqyu24LaXL96iP9bLfaFnz-B2bsCbFN1aYFqs';
-  const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
-  // 切换图片的函数
-  function changeImage(index) {
-    // 1. 隐藏所有大图
-    for (let i = 1; i <= 4; i++) {
-      const img = document.getElementById(`main-${i}`);
-      if (img) img.style.display = 'none';
-      
-      // 2. 取消所有缩略图的高亮边框
-      const thumbLabel = document.querySelector(`label[onclick="changeImage(${i})"]`);
-      if (thumbLabel) thumbLabel.style.borderColor = 'transparent';
-    }
-
-    // 3. 显示当前点击的那张大图
-    const activeImg = document.getElementById(`main-${index}`);
-    if (activeImg && activeImg.src) {
-      activeImg.style.display = 'block';
-      activeImg.style.objectFit = 'cover';
-    }
-
-    // 4. 给当前缩略图加上黑色边框
-    const activeLabel = document.querySelector(`label[onclick="changeImage(${index})"]`);
-    if (activeLabel) activeLabel.style.borderColor = '#0f172a';
-  }
-
-  async function loadProductData() {
-    const { data, error } = await _supabase.from('Products').select('*').limit(1).single();
-
-    if (error) {
-      console.error('读取失败:', error);
-      return;
-    }
-
-    if (data) {
-      // 加载图片数据
-      for (let i = 1; i <= 4; i++) {
-        const imageUrl = data[`image_${i}`] || data[`img${i}`]; 
-        if (imageUrl) {
-          const mainImg = document.getElementById(`main-${i}`);
-          const thumbImg = document.getElementById(`thumb-${i}`);
-          if (mainImg) mainImg.src = imageUrl;
-          if (thumbImg) thumbImg.src = imageUrl;
-        }
-      }
-
-      // 加载其他数据
-      if (document.getElementById('prod-desc')) document.getElementById('prod-desc').innerText = data.description;
-      const priceElement = document.querySelector('.text-lg.font-black');
-      if (priceElement) priceElement.innerText = `RM ${data.price}`;
-      
-      const waBtn = document.querySelector('a[href^="https://wa.me"]');
-      if (waBtn) {
-        waBtn.href = `https://wa.me/${data.wa_number || '60126420820'}?text=${encodeURIComponent('你好，我想购买：' + (data.name || '产品'))}`;
-      }
-
-      // 初始化：显示第一张图
-      changeImage(1);
-    }
-  }
-
-  window.addEventListener('load', loadProductData);
-</script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="main.js"></script>
 </body>
 </html>
