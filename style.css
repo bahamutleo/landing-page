@@ -1,0 +1,18 @@
+/* Pure CSS Image Switching Logic (Radio Button Hack) */
+#img-1:checked ~ .gallery-main .img-1 { display: block; }
+#img-2:checked ~ .gallery-main .img-2 { display: block; }
+#img-3:checked ~ .gallery-main .img-3 { display: block; }
+#img-4:checked ~ .gallery-main .img-4 { display: block; }
+
+/* Thumbnail Selection Highlight */
+#img-1:checked ~ .gallery-thumbs label[for="img-1"] { border-color: #0f172a; transform: scale(1.05); opacity: 1; }
+#img-2:checked ~ .gallery-thumbs label[for="img-2"] { border-color: #0f172a; transform: scale(1.05); opacity: 1; }
+#img-3:checked ~ .gallery-thumbs label[for="img-3"] { border-color: #0f172a; transform: scale(1.05); opacity: 1; }
+#img-4:checked ~ .gallery-thumbs label[for="img-4"] { border-color: #0f172a; transform: scale(1.05); opacity: 1; }
+
+/* Hide Scrollbar Utility */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Smooth Transitions */
+.gallery-main img { transition: opacity 0.3s ease-in-out; }
