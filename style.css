@@ -77,32 +77,31 @@
     object-fit: contain;
 }
 
-/* --- 强制主图 & 缩略图大图填充 --- */
+/* 1. 强制主图容器为 1:1 正方形 */
+.gallery-main {
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    position: relative !important;
+    overflow: hidden !important;
+    background-color: #f1f5f9;
+    border-radius: 0.75rem;
+}
+
+/* 2. 核心：强制所有主图和大图充满容器 */
 .gallery-main img, 
+#main-1, #main-2, #main-3, #main-4 {
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    object-fit: cover !important; /* 裁剪并填充 */
+    object-position: center !important;
+}
+
+/* 3. 缩略图填充 */
 .gallery-thumbs label img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover !important; /* 核心：裁剪填充，不留白 */
-    object-position: center;     /* 居中裁剪 */
-    display: block;
-}
-
-/* 强制主图容器为 1:1 正方形 */
-.gallery-main {
-    width: 100%;
-    aspect-ratio: 1 / 1; 
-    overflow: hidden;
-    border-radius: 0.75rem;
-    background-color: #f1f5f9;
-}
-
-/* 确保缩略图 label 也有固定大小 */
-.gallery-thumbs label {
-    width: 5rem; 
-    height: 5rem;
-    flex-shrink: 0;
-    border-radius: 0.5rem;
-    overflow: hidden;
-    cursor: pointer;
-    border: 2px solid transparent; /* 预留边框位置 */
+    object-fit: cover !important;
 }
