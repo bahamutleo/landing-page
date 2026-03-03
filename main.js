@@ -50,6 +50,17 @@ async function loadProductData() {
     if (data.ing_main) document.getElementById('ing-main').src = data.ing_main;
     if (data.ing_icon_1) document.getElementById('ing-icon-1').src = data.ing_icon_1;
     if (data.ing_desc_1) document.getElementById('ing-desc-1').innerText = data.ing_desc_1;
+    if (data.ing_icon_2) document.getElementById('ing-icon-2').src = data.ing_icon_2;
+    if (data.ing_desc_2) document.getElementById('ing-desc-2').innerText = data.ing_desc_2;
+    if (data.ing_icon_3) document.getElementById('ing-icon-3').src = data.ing_icon_3;
+    if (data.ing_desc_3) document.getElementById('ing-desc-3').innerText = data.ing_desc_3;
+    if (data.ing_icon_4) document.getElementById('ing-icon-4').src = data.ing_icon_4;
+    if (data.ing_desc_4) document.getElementById('ing-desc-4').innerText = data.ing_desc_4;
+    if (data.ing_icon_5) document.getElementById('ing-icon-5').src = data.ing_icon_5;
+    if (data.ing_desc_5) document.getElementById('ing-desc-5').innerText = data.ing_desc_5;
+    if (data.ing_icon_6) document.getElementById('ing-icon-6').src = data.ing_icon_6;
+    if (data.ing_desc_6) document.getElementById('ing-desc-6').innerText = data.ing_desc_6;
+    
     if (data.testi_img_1) document.getElementById('testi-1').src = data.testi_img_1;
     if (data.testi_img_2) document.getElementById('testi-2').src = data.testi_img_2;
 
