@@ -1,54 +1,65 @@
-/* 1. 核心修复：强制所有图片区域大图填充，不留白 */
-#main-1, #main-2, #main-3, #main-4,
-#thumb-1, #thumb-2, #thumb-3, #thumb-4,
-#feature-img-1, #feature-img-2, #feature-img-3, #feature-img-4, #feature-img-5, #feature-img-6,
-#ing-main, #ing-icon-1, #testi-1, #testi-2, #site-logo {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
+const supabaseUrl = 'https://sereexsifpgpgbhmcdqv.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlcmVleHNpZnBncGdiaG1jZHF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0MzgwNjcsImV4cCI6MjA4ODAxNDA2N30.6DOdcwdqyu24LaXL96iP9bLfaFnz-B2bsCbFN1aYFqs';
+const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+function changeImage(index) {
+  for (let i = 1; i <= 4; i++) {
+    const img = document.getElementById(`main-${i}`);
+    if (img) img.style.display = 'none';
+    const thumbLabel = document.querySelector(`label[onclick="changeImage(${i})"]`);
+    if (thumbLabel) thumbLabel.style.borderColor = 'transparent';
+  }
+  const activeImg = document.getElementById(`main-${index}`);
+  if (activeImg && activeImg.src && !activeImg.src.includes('undefined')) {
+    activeImg.style.display = 'block';
+    activeImg.style.objectFit = 'cover';
+  }
+  const activeLabel = document.querySelector(`label[onclick="changeImage(${index})"]`);
+  if (activeLabel) activeLabel.style.borderColor = '#0f172a';
 }
 
-/* Logo 比较特殊，使用 contain 保证不被裁剪 */
-#site-logo {
-    object-fit: contain !important;
+async function loadProductData() {
+  const { data, error } = await _supabase.from('Products').select('*').limit(1).single();
+  if (error) return console.error('读取失败:', error);
+
+  if (data) {
+    // 1. 展示图
+    for (let i = 1; i <= 4; i++) {
+      const url = data[`image_${i}`];
+      if (url) {
+        document.getElementById(`main-${i}`).src = url;
+        document.getElementById(`thumb-${i}`).src = url;
+      }
+
+      // --- 6. 加载 Logo ---
+  const logoImg = document.getElementById('site-logo');
+  if (logoImg && data.logo_url) {
+      logoImg.src = data.logo_url;
+  } else if (logoImg) {
+      // 如果数据库没填链接，可以设置一个默认占位图或者隐藏
+      logoImg.alt = "Brand Logo";
+  }
+      
+    }
+    // 2. 6大功能
+    for (let i = 1; i <= 6; i++) {
+      if (data[`feature_img_${i}`]) document.getElementById(`feature-img-${i}`).src = data[`feature_img_${i}`];
+      if (data[`feature_text_${i}`]) document.getElementById(`feature-text-${i}`).innerText = data[`feature_text_${i}`];
+    }
+    // 3. 成分与反馈
+    if (data.ing_main) document.getElementById('ing-main').src = data.ing_main;
+    if (data.ing_icon_1) document.getElementById('ing-icon-1').src = data.ing_icon_1;
+    if (data.ing_desc_1) document.getElementById('ing-desc-1').innerText = data.ing_desc_1;
+    if (data.testi_img_1) document.getElementById('testi-1').src = data.testi_img_1;
+    if (data.testi_img_2) document.getElementById('testi-2').src = data.testi_img_2;
+
+    // 4. 基础信息
+    document.getElementById('prod-desc').innerText = data.description || "";
+    document.getElementById('price-tag').innerText = `RM ${data.price || "0"}`;
+    document.getElementById('wa-link').href = `https://wa.me/${data.wa_number || '60126420820'}?text=Hi, 我想买 ${data.name}`;
+
+    changeImage(1);
+  }
 }
 
-/* 2. 主图容器：强制 1:1 正方形 */
-.gallery-main {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    background-color: #f8fafc;
-    border-radius: 0.75rem;
-    overflow: hidden;
-}
-
-/* 3. 缩略图样式 */
-.gallery-thumbs label {
-    flex-shrink: 0;
-    width: 5rem;
-    height: 5rem;
-    border: 2px solid transparent;
-    border-radius: 0.5rem;
-    overflow: hidden;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-/* 4. 黑色 Header 样式 */
-.custom-header {
-    background-color: #000000;
-    padding: 0.7rem;
-    display: flex;
-    justify-content: center;
-}
-.logo-container {
-    width: 182px;
-    height: 55px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* 5. 辅助工具 */
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+window.addEventListener('load', loadProductData);
