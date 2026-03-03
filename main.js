@@ -30,6 +30,16 @@ async function loadProductData() {
         document.getElementById(`main-${i}`).src = url;
         document.getElementById(`thumb-${i}`).src = url;
       }
+
+      // --- 6. 加载 Logo ---
+  const logoImg = document.getElementById('site-logo');
+  if (logoImg && data.logo_url) {
+      logoImg.src = data.logo_url;
+  } else if (logoImg) {
+      // 如果数据库没填链接，可以设置一个默认占位图或者隐藏
+      logoImg.alt = "Brand Logo";
+  }
+      
     }
     // 2. 6大功能
     for (let i = 1; i <= 6; i++) {
