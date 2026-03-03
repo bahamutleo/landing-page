@@ -101,9 +101,9 @@
             <div class="space-y-10">
                 <div class="flex items-center gap-6">
                     <div class="w-16 h-16 bg-slate-50 rounded-full border border-slate-100 flex-shrink-0 overflow-hidden">
-                        <img src="https://picsum.photos/seed/feature-1/200/200" class="w-full h-full object-cover grayscale opacity-70" alt="Feature 1">
+                        <img id="feature-img-1" src="https://picsum.photos/seed/feature-1/200/200" class="w-full h-full object-cover grayscale opacity-70" alt="Feature 1">
                     </div>
-                    <p class="text-[11px] text-slate-500 leading-relaxed">澎湃动力，持久续航：有效改善疲劳状态，提升战斗力，让你在关键时刻从容不迫。</p>
+                    <p id="feature-text-1" class="text-[11px] text-slate-500 leading-relaxed">澎湃动力，持久续航：有效改善疲劳状态，提升战斗力，让你在关键时刻从容不迫。</p>
                 </div>
                 <div class="flex items-center gap-6">
                     <div class="w-16 h-16 bg-slate-50 rounded-full border border-slate-100 flex-shrink-0 overflow-hidden">
@@ -231,7 +231,8 @@
     if (activeLabel) activeLabel.style.borderColor = '#0f172a';
   }
 
-  async function loadProductData() {
+async function loadProductData() {
+    console.log("正在读取产品及核心功能数据...");
     const { data, error } = await _supabase.from('Products').select('*').limit(1).single();
 
     if (error) {
@@ -240,29 +241,41 @@
     }
 
     if (data) {
-      // 加载图片数据
+      // --- A. 加载原有的主图、描述、价格 ---
       for (let i = 1; i <= 4; i++) {
         const imageUrl = data[`image_${i}`] || data[`img${i}`]; 
         if (imageUrl) {
           const mainImg = document.getElementById(`main-${i}`);
-          const thumbImg = document.getElementById(`thumb-${i}`);
+          const thumbImg = document.getElementById!(`thumb-${i}`);
           if (mainImg) mainImg.src = imageUrl;
           if (thumbImg) thumbImg.src = imageUrl;
         }
       }
-
-      // 加载其他数据
       if (document.getElementById('prod-desc')) document.getElementById('prod-desc').innerText = data.description;
       const priceElement = document.querySelector('.text-lg.font-black');
       if (priceElement) priceElement.innerText = `RM ${data.price}`;
-      
-      const waBtn = document.querySelector('a[href^="https://wa.me"]');
-      if (waBtn) {
-        waBtn.href = `https://wa.me/${data.wa_number || '60126420820'}?text=${encodeURIComponent('你好，我想购买：' + (data.name || '产品'))}`;
+
+      // --- B. 新增：加载 6 大核心功能 (重点在此) ---
+      for (let i = 1; i <= 6; i++) {
+        // 寻找 HTML 中对应的 ID (例如 feature-img-1, feature-text-1)
+        const featureImg = document.getElementById(`feature-img-${i}`);
+        const featureText = document.getElementById(`feature-text-${i}`);
+        
+        // 从 Supabase 字段中读取数据
+        const imgUrlFromDb = data[`feature_img_${i}`];
+        const textFromDb = data[`feature_text_${i}`];
+
+        if (featureImg && imgUrlFromDb) {
+          featureImg.src = imgUrlFromDb;
+          featureImg.style.objectFit = 'cover'; // 确保功能图标不失真
+        }
+        if (featureText && textFromDb) {
+          featureText.innerText = textFromDb;
+        }
       }
 
-      // 初始化：显示第一张图
-      changeImage(1);
+      // 初始化显示第一张主图
+      if (typeof changeImage === 'function') changeImage(1);
     }
   }
 
