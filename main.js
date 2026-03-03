@@ -2,7 +2,6 @@ const supabaseUrl = 'https://sereexsifpgpgbhmcdqv.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlcmVleHNpZnBncGdiaG1jZHF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0MzgwNjcsImV4cCI6MjA4ODAxNDA2N30.6DOdcwdqyu24LaXL96iP9bLfaFnz-B2bsCbFN1aYFqs';
 const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-// 切换图片的函数
 function changeImage(index) {
   for (let i = 1; i <= 4; i++) {
     const img = document.getElementById(`main-${i}`);
@@ -10,59 +9,45 @@ function changeImage(index) {
     const thumbLabel = document.querySelector(`label[onclick="changeImage(${i})"]`);
     if (thumbLabel) thumbLabel.style.borderColor = 'transparent';
   }
-
   const activeImg = document.getElementById(`main-${index}`);
   if (activeImg && activeImg.src && !activeImg.src.includes('undefined')) {
     activeImg.style.display = 'block';
     activeImg.style.objectFit = 'cover';
   }
-
   const activeLabel = document.querySelector(`label[onclick="changeImage(${index})"]`);
   if (activeLabel) activeLabel.style.borderColor = '#0f172a';
 }
 
 async function loadProductData() {
-  console.log("正在从 Supabase 同步数据...");
   const { data, error } = await _supabase.from('Products').select('*').limit(1).single();
-
-  if (error) {
-    console.error('读取失败:', error);
-    return;
-  }
+  if (error) return console.error('读取失败:', error);
 
   if (data) {
-    // 1. 加载 4 张展示图
+    // 1. 展示图
     for (let i = 1; i <= 4; i++) {
-      const imageUrl = data[`image_${i}`] || data[`img${i}`]; 
-      if (imageUrl) {
-        const mainImg = document.getElementById(`main-${i}`);
-        const thumbImg = document.getElementById(`thumb-${i}`);
-        if (mainImg) mainImg.src = imageUrl;
-        if (thumbImg) thumbImg.src = imageUrl;
+      const url = data[`image_${i}`];
+      if (url) {
+        document.getElementById(`main-${i}`).src = url;
+        document.getElementById(`thumb-${i}`).src = url;
       }
     }
-
-    // 2. 加载 6 大核心功能 (新增逻辑)
+    // 2. 6大功能
     for (let i = 1; i <= 6; i++) {
-        const fImg = document.getElementById(`feature-img-${i}`);
-        const fText = document.getElementById(`feature-text-${i}`);
-        const dbImg = data[`feature_img_${i}`];
-        const dbText = data[`feature_text_${i}`];
-        if (fImg && dbImg) fImg.src = dbImg;
-        if (fText && dbText) fText.innerText = dbText;
+      if (data[`feature_img_${i}`]) document.getElementById(`feature-img-${i}`).src = data[`feature_img_${i}`];
+      if (data[`feature_text_${i}`]) document.getElementById(`feature-text-${i}`).innerText = data[`feature_text_${i}`];
     }
+    // 3. 成分与反馈
+    if (data.ing_main) document.getElementById('ing-main').src = data.ing_main;
+    if (data.ing_icon_1) document.getElementById('ing-icon-1').src = data.ing_icon_1;
+    if (data.ing_desc_1) document.getElementById('ing-desc-1').innerText = data.ing_desc_1;
+    if (data.testi_img_1) document.getElementById('testi-1').src = data.testi_img_1;
+    if (data.testi_img_2) document.getElementById('testi-2').src = data.testi_img_2;
 
-    // 3. 加载基础信息
-    if (document.getElementById('prod-desc')) document.getElementById('prod-desc').innerText = data.description;
-    const priceElement = document.querySelector('.text-lg.font-black');
-    if (priceElement) priceElement.innerText = `RM ${data.price}`;
-    
-    const waBtn = document.querySelector('a[href^="https://wa.me"]');
-    if (waBtn) {
-      waBtn.href = `https://wa.me/${data.wa_number || '60126420820'}?text=${encodeURIComponent('你好，我想购买：' + (data.name || '产品'))}`;
-    }
+    // 4. 基础信息
+    document.getElementById('prod-desc').innerText = data.description || "";
+    document.getElementById('price-tag').innerText = `RM ${data.price || "0"}`;
+    document.getElementById('wa-link').href = `https://wa.me/${data.wa_number || '60126420820'}?text=Hi, 我想买 ${data.name}`;
 
-    // 初始化第一张主图
     changeImage(1);
   }
 }
